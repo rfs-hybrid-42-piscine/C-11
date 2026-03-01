@@ -51,7 +51,9 @@ Instead of hardcoding which function to call, you will learn how to store the me
 ## 🛠️ Instructions
 
 ### 🧪 Compilation & Testing
-Except for `ex05` (which is a standalone program), these exercises require a custom `main` function to test the function pointers. You can use a `tester.c` approach with preprocessor macros.
+Unlike Shell scripts, C programs must be compiled before they can be executed. Furthermore, most of these exercises strictly ask for functions, not complete programs (with the exception of **[`ex05: do-op`](ex05)**). 
+
+To make testing incredibly easy while avoiding "undefined reference" linker errors, the **[`tester.c`](tester.c)** file in the root directory uses **C Preprocessor Macros** (`#ifdef`). This allows you to selectively compile and test only the exercises you want.
 
 1. **Clone the repository:**
    You can clone this module directly, or pull the entire 42 Piscine parent repository which includes this module as a submodule.
@@ -69,13 +71,39 @@ Except for `ex05` (which is a standalone program), these exercises require a cus
    ```
    *(Note: The `--recurse-submodules` flag ensures all nested module repositories are populated immediately.)*
 
-2. **Testing ex05 (do-op):**
+2. **Test a Single Exercise:**
+   Pass the corresponding `-D EX**` flag to activate that specific test block inside **[`tester.c`](tester.c)**.
+   ```bash
+   # Example for ex00:
+   cc -Wall -Wextra -Werror -D EX00 tester.c ex00/ft_foreach.c -o test_ex00
+   ./test_ex00
+   ```
+
+3. **Test Multiple Exercises Together:**
+   You can chain multiple `-D` flags to test several functions at once, provided you include all their `.c` files in the command.
+   ```bash
+   # Example for ex00 and ex01:
+   cc -Wall -Wextra -Werror -D EX00 -D EX01 tester.c ex00/ft_foreach.c ex01/ft_map.c -o test_multiple
+   ./test_multiple
+   ```
+
+4. **Test ALL Exercises at Once (except do-op):**
+   By passing the `-D TEST_ALL` master flag, you can activate the entire testing suite in one go!
+   ```bash
+   cc -Wall -Wextra -Werror -D TEST_ALL tester.c ex00/ft_foreach.c ex01/ft_map.c ex02/ft_any.c ex03/ft_count_if.c ex04/ft_is_sort.c ex06/ft_sort_string_tab.c ex07/ft_advanced_sort_string_tab.c -o test_all
+   ./test_all
+   ```
+
+5. **Testing ex05 (do-op):**
+   Because `do-op` is a standalone program, it has its own Makefile and should be tested separately.
    ```bash
    cd ex05
    make
    ./do-op 42 "+" 21
    ./do-op 25 "/" 0
    ```
+
+> **⚠️ WARNING for 42 Students:** Do not push **[`tester.c`](tester.c)** or any executable files to your final Moulinette repository! They are strictly for local testing purposes. Submitting unauthorized files will result in a 0.
 
 ### 🚨 The Norm
 Moulinette relies on a program called `norminette` to check if your files comply with the Norm. Every single `.c` and `.h` file must pass.
