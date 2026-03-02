@@ -27,10 +27,11 @@ Instead of hardcoding which function to call, you will learn how to store the me
 *The following section explains the core concepts required to solve each exercise. It focuses on the fundamental logic of C programming, emphasizing manual memory manipulation and edge-case management.*
 
 ### 🔹 Iterators & Mapping
+
 | Exercise | Concept & Logic |
 | :--- | :--- |
 | **[`ex00: ft_foreach`](ex00)** | **Applying Functions:** Iterating through an integer array and executing a function on each element. <br><br>**Logic:** The prototype accepts a function pointer `void (*f)(int)`. We use a simple loop from `0` to `length - 1`, calling `f(tab[i])` for every index. |
-| **[`ex01: ft_map`](ex01)** | **Data Transformation:** Creating a new array based on the return values of a function. <br><br>**Logic:** `malloc` is strictly allowed here. We allocate a new integer array of size `length`. Then, we iterate through the original array, assigning `new_tab[i] = f(tab[i])`, and return the newly allocated array. |
+| **[`ex01: ft_map`](ex01)** | **Data Transformation:** Creating a new array based on the return values of a function. <br><br>**Logic:** `malloc` is strictly allowed here. We allocate a new integer array of size `length`. Then, we iterate through the original array, assigning `new[i] = f(tab[i])`, and return the newly allocated array. |
 
 ### 🔍 Conditionals & Sorting Logic
 | Exercise | Concept & Logic |
@@ -40,6 +41,8 @@ Instead of hardcoding which function to call, you will learn how to store the me
 | **[`ex04: ft_is_sort`](ex04)** | **Order Validation:** Verifying if an array is completely sorted. <br><br>**Logic:** The function pointer compares two adjacent integers (`tab[i]` and `tab[i+1]`). Since a sorted array can be either strictly ascending or strictly descending, we must check for both possibilities. If the sequence breaks neither rule, it returns 1; otherwise, it returns 0. |
 
 ### 👑 Advanced Applications
+
+
 | Exercise | Concept & Logic |
 | :--- | :--- |
 | **[`ex05: do-op`](ex05)** | **Dispatch Tables:** Building a simple calculator program without massive `if` statements. <br><br>**Logic:** The program takes arguments like `./do-op 42 "+" 21`. Instead of hardcoding operations, we declare an array of function pointers mapped to the operators `+ - * / %`. We parse the strings to integers and route the calculation to the correct function dynamically. Edge cases like `division by zero` and `modulo by zero` must be caught and printed safely. |
@@ -95,10 +98,10 @@ To make testing incredibly easy while avoiding "undefined reference" linker erro
    ```
 
 5. **Testing ex05 (do-op):**
-   Because `do-op` is a standalone program, it has its own Makefile and should be tested separately.
+   Because `do-op` is a standalone program that does **not** use a Makefile, it must be compiled directly from its source files and tested separately.
    ```bash
    cd ex05
-   make
+   cc -Wall -Wextra -Werror do_op.c do_op_calc.c -o do-op
    ./do-op 42 "+" 21
    ./do-op 25 "/" 0
    ```
